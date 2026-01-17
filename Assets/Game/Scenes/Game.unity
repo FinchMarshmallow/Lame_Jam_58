@@ -734,6 +734,8 @@ Transform:
   - {fileID: 834203186}
   - {fileID: 1960789200}
   - {fileID: 36123444}
+  - {fileID: 1982186340}
+  - {fileID: 1664776850}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &309205301
@@ -3582,13 +3584,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1664776849}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 169.9, y: -4.13892, z: 33.5}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 113.26666, y: -2.75928, z: 22.333334}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 549834286}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 283896370}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1685062688 stripped
 Transform:
@@ -3877,6 +3879,7 @@ GameObject:
   - component: {fileID: 1775607528}
   - component: {fileID: 1775607527}
   - component: {fileID: 1775607526}
+  - component: {fileID: 1775607529}
   - component: {fileID: 1775607525}
   m_Layer: 0
   m_Name: Ship
@@ -3978,6 +3981,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TrransformResetRot
   resetMask: {x: 1, y: 1, z: 0}
   reset: {fileID: 1775607524}
+--- !u!114 &1775607529
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1775607523}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f2176a992e83c040af09cc6c8400762, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ShipEntity
+  CurrentHealsPoint: 0
+  MaxHealsPoint: 0
+  CurrentOil: 0
+  MaxOil: 0
 --- !u!1 &1876675085 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1103286301060603400, guid: 4ae024eef22f4b9478b3a01a06224a93, type: 3}
@@ -4203,13 +4222,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1982186339}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -40.1, y: -4.13892, z: -133.5}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -26.733334, y: -2.75928, z: -89}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1266909599}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 283896370}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2017109051
 GameObject:
@@ -4653,5 +4672,3 @@ SceneRoots:
   - {fileID: 832575519}
   - {fileID: 283896370}
   - {fileID: 1500059072}
-  - {fileID: 1982186340}
-  - {fileID: 1664776850}
