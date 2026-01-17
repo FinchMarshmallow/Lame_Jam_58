@@ -5,14 +5,18 @@ using System.Collections.Generic;
 public class MissionSystem : MonoBehaviour
 {
     [Header("UI References")]
-    public GameObject missionPanel;      // Сама панель которую включаем/выключаем
-    public TextMeshProUGUI headerText;   
-    public TextMeshProUGUI descText;     // Описание миссии
-    public TextMeshProUGUI routeText;    // Откуда -> Куда
+    public GameObject missionPanel;
+    public TextMeshProUGUI headerText;
+    public TextMeshProUGUI descText;
+    public TextMeshProUGUI routeText;
+
+    [Header("Navigation")]
+    public CompassSystem compassSystem; 
+    public Transform[] allStations;     
 
     [Header("Data")]
-    public List<Mission> allMissions;    // Список всех миссий в игре
-    public int currentMissionIndex = 0;  // На каком мы сейчас уровне
+    public List<Mission> allMissions;
+    public int currentMissionIndex = 0;
 
     private bool isPaused = false;
 
@@ -24,7 +28,6 @@ public class MissionSystem : MonoBehaviour
 
     void Update()
     {
-        // Логика нажатия TAB
         if (Input.GetKeyDown(KeyCode.Tab))
         {
             TogglePause();
@@ -34,49 +37,60 @@ public class MissionSystem : MonoBehaviour
     public void TogglePause()
     {
         isPaused = !isPaused;
+        missionPanel.SetActive(isPaused);
 
         if (isPaused)
         {
-            missionPanel.SetActive(true);
-            Time.timeScale = 0f; 
+            Time.timeScale = 0f;
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
         }
         else
         {
-            missionPanel.SetActive(false);
-            Time.timeScale = 1f; 
+            Time.timeScale = 1f;
         }
     }
 
-    // Метод вызываем, когда миссия пройдена
     public void CompleteCurrentMission()
     {
         Debug.Log("Mission Completed!");
-
         currentMissionIndex++;
 
         if (currentMissionIndex < allMissions.Count)
         {
             UpdateMissionUI();
-            // Можно проиграть звук успеха тут
         }
         else
         {
-            descText.text = "ALL MISSIONS COMPLETED. YOU ARE FREE.";
-            routeText.text = "Relax pilot.";
+            // Конец игры
+            if (compassSystem) compassSystem.ClearQuestMarkers();
+
+            descText.text = "ALL MISSIONS COMPLETED.";
+            routeText.text = "";
             headerText.text = "GAME OVER";
         }
     }
 
+    // Главный метод обновления
     void UpdateMissionUI()
     {
         if (currentMissionIndex < allMissions.Count)
         {
             Mission m = allMissions[currentMissionIndex];
+
+            // 1. Текст
             headerText.text = $"// MISSION LEVEL {currentMissionIndex + 1}";
             descText.text = m.description;
             routeText.text = $"PICKUP: {m.pickupStationName}\nDELIVER: {m.deliverStationName}";
+
+            if (compassSystem != null && allStations.Length > 0)
+            {
+                if (m.deliverStationID >= 0 && m.deliverStationID < allStations.Length)
+                {
+                    Transform target = allStations[m.deliverStationID];
+                    compassSystem.SetQuestMarker(target);
+                }
+            }
         }
     }
 }
@@ -84,8 +98,10 @@ public class MissionSystem : MonoBehaviour
 [System.Serializable]
 public class Mission
 {
-    [TextArea(3, 5)] 
+    [TextArea(3, 5)]
     public string description;
     public string pickupStationName;
-    public string deliverStationName; 
+    public int pickupStationID;
+    public string deliverStationName;
+    public int deliverStationID;
 }

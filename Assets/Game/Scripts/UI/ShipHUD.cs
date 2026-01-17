@@ -32,11 +32,9 @@ public class ShipHUD : MonoBehaviour
     {
         if (playerShip == null) return;
 
-        // ��������� ���� (�������� ������ ���� ������������� 0..1)
         hullBar.fillAmount = playerShip.CurrentHealsPoint / playerShip.MaxHealsPoint;
         fuelBar.fillAmount = playerShip.CurrentOil / playerShip.MaxOil;
 
-        // ��������� �������� (��������� �� ������)
         speedText.text = $"{Mathf.Round(Ship.gameObject.GetComponent<Rigidbody>().linearVelocity.magnitude)} m/s"; 
     }
 
