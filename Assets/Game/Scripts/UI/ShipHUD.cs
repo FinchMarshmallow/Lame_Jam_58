@@ -14,17 +14,30 @@ public class ShipHUD : MonoBehaviour
 
 
     public ShipEntity playerShip;
+    public GameObject Ship;
+
+    void Start()
+    {
+
+
+        if (playerShip == null)
+        {
+            Debug.LogError("Player Ship reference is missing in ShipHUD.");
+            
+
+        }
+    }
 
     void Update()
     {
         if (playerShip == null) return;
 
-        // Обновляем бары (значения должны быть нормализованы 0..1)
-        hullBar.fillAmount = playerShip.currentHealth / playerShip.maxHealth;
-        fuelBar.fillAmount = playerShip.currentFuel / playerShip.maxFuel;
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ 0..1)
+        hullBar.fillAmount = playerShip.CurrentHealsPoint / playerShip.MaxHealsPoint;
+        fuelBar.fillAmount = playerShip.CurrentOil / playerShip.MaxOil;
 
-        // Обновляем скорость (округляем до целого)
-        speedText.text = $"{Mathf.Round(playerShip.rb.velocity.magnitude)} m/s";
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ)
+        speedText.text = $"{Mathf.Round(Ship.gameObject.GetComponent<Rigidbody>().linearVelocity.magnitude)} m/s"; 
     }
 
     public void SetObjective(string text)

@@ -149,7 +149,6 @@ GameObject:
   - component: {fileID: 8072668532295831765}
   - component: {fileID: 974072869922297046}
   - component: {fileID: 743833668635584608}
-  - component: {fileID: 9188140180563007762}
   m_Layer: 0
   m_Name: Canvas
   m_TagString: Untagged
@@ -240,18 +239,3 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &9188140180563007762
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3654141806613421832}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a0bde4a25127bf4d8ebaac452f7a4cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DistanceActivator
-  uiCanvas: {fileID: 3654141806613421832}
-  player: {fileID: 0}
-  showDistance: 500
