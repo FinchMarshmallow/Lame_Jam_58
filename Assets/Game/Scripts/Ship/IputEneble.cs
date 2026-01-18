@@ -6,6 +6,12 @@ public class IputEneble : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 	[SerializeField] private GameObject[] offObj;
 	[SerializeField] private float timeScale;
 
+	public void Exit()
+	{
+		OffObj(false);
+		Time.timeScale = 1f;
+	}
+
 	public void OnPointerEnter(PointerEventData eventData)
 	{
 		OffObj(true);

@@ -668,8 +668,8 @@ GameObject:
   - component: {fileID: 1347554858053238781}
   - component: {fileID: 5397080354895542814}
   - component: {fileID: 7504051812268197683}
-  - component: {fileID: 1044333337399489848}
   - component: {fileID: 6298283442610981995}
+  - component: {fileID: 1044333337399489848}
   m_Layer: 0
   m_Name: Ship
   m_TagString: Untagged
@@ -735,7 +735,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3843696367226250853}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 14ecaf5587374bc4db4de802ff4facba, type: 3}
+  m_Script: {fileID: 11500000, guid: 44ff95eaef626b7469ab28a603b36011, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShipTestMove
   forceRotation: 12
@@ -744,6 +744,22 @@ MonoBehaviour:
   inputLinear: {x: 0, y: 0, z: 0}
   InputRot: {x: 0, y: 0}
   isFullForward: 0
+--- !u!114 &6298283442610981995
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3843696367226250853}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 881189fb7e38e7b40a7b38a1e83a90a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ShipEntity
+  CurrentHealsPoint: 1
+  MaxHealsPoint: 200
+  CurrentOil: 1
+  MaxOil: 1
 --- !u!54 &1044333337399489848
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -771,22 +787,59 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 64
   m_CollisionDetection: 0
---- !u!114 &6298283442610981995
-MonoBehaviour:
+--- !u!1 &4169808974603289134
+GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3843696367226250853}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1409939553234003707}
+  - component: {fileID: 8738826620051167222}
+  m_Layer: 17
+  m_Name: volume (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1409939553234003707
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4169808974603289134}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0.69580936, z: -0, w: -0.71822655}
+  m_LocalPosition: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.66666657, y: 0.6666667, z: 0.66666657}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 287569827999885902}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &8738826620051167222
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4169808974603289134}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f2176a992e83c040af09cc6c8400762, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ShipEntity
-  CurrentHealsPoint: 1
-  MaxHealsPoint: 200
-  CurrentOil: 1
-  MaxOil: 1
+  serializedVersion: 3
+  m_Size: {x: 3.224411, y: 1.4514279, z: 1.5807495}
+  m_Center: {x: 1.4013901, y: -1.4669657, z: -1.4410706}
 --- !u!1 &5002876060351575678
 GameObject:
   m_ObjectHideFlags: 0
@@ -1541,10 +1594,70 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DockingShipHandler
   dock:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 980483318024667041}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 3875881910623239734}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 477450240236576667}
+        m_TargetAssemblyTypeName: IputEneble, Assembly-CSharp
+        m_MethodName: Exit
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
   undock:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 980483318024667041}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 3875881910623239734}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   ship: {fileID: 2905634093050237022}
   pointsDocking:
   - {fileID: 4395788767252799110}
@@ -1556,6 +1669,7 @@ MonoBehaviour:
     m_Bits: 512
   keyDocking: 101
   dockingRealization: {fileID: 8936758662909085194}
+  _targetStation: {fileID: 0}
 --- !u!136 &8122620109024497036
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1594,10 +1708,15 @@ MonoBehaviour:
   shipUp: {fileID: 980483318024667041}
   cam: {fileID: 8838987504337756544}
   ship: {fileID: 2905634093050237022}
-  offing: []
+  offing:
+  - {fileID: 5397080354895542814}
+  - {fileID: 7504051812268197683}
+  - {fileID: 2790147524143015864}
+  - {fileID: 4966848022401167863}
+  - {fileID: 477450240236576667}
   oning: []
-  interpolationPos: 0.8
-  interpolationRot: 0.8
+  interpolationPos: 0.2
+  interpolationRot: 0.2
 --- !u!1 &8824851908435744748
 GameObject:
   m_ObjectHideFlags: 0
@@ -2181,11 +2300,35 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 31711005640895732, guid: 2b81328aa96b59948a89cd93152e21fb, type: 3}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1263794126758765199, guid: 2b81328aa96b59948a89cd93152e21fb, type: 3}
+      propertyPath: docking
+      value: 
+      objectReference: {fileID: 8936758662909085194}
+    - target: {fileID: 2860343027935315440, guid: 2b81328aa96b59948a89cd93152e21fb, type: 3}
+      propertyPath: rotationForce
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3045354085593815760, guid: 2b81328aa96b59948a89cd93152e21fb, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 191.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3045354085593815760, guid: 2b81328aa96b59948a89cd93152e21fb, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 3045354085593815760, guid: 2b81328aa96b59948a89cd93152e21fb, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -20
       objectReference: {fileID: 0}
     - target: {fileID: 3727103036960192003, guid: 2b81328aa96b59948a89cd93152e21fb, type: 3}
       propertyPath: m_Name
       value: view
+      objectReference: {fileID: 0}
+    - target: {fileID: 4044846612008349027, guid: 2b81328aa96b59948a89cd93152e21fb, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6703497136207893451, guid: 2b81328aa96b59948a89cd93152e21fb, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2227,14 +2370,43 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8513640812760358712, guid: 2b81328aa96b59948a89cd93152e21fb, type: 3}
+      propertyPath: m_fontSize
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 8513640812760358712, guid: 2b81328aa96b59948a89cd93152e21fb, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 9145763477314025364, guid: 2b81328aa96b59948a89cd93152e21fb, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -2.11
+      objectReference: {fileID: 0}
+    - target: {fileID: 9145763477314025364, guid: 2b81328aa96b59948a89cd93152e21fb, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 6.32
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 3910507447549229196, guid: 2b81328aa96b59948a89cd93152e21fb, type: 3}
+      insertIndex: 0
+      addedObject: {fileID: 1409939553234003707}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2b81328aa96b59948a89cd93152e21fb, type: 3}
+--- !u!4 &287569827999885902 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3910507447549229196, guid: 2b81328aa96b59948a89cd93152e21fb, type: 3}
+  m_PrefabInstance: {fileID: 3871212156539982530}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &980483318024667041 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4044846612008349027, guid: 2b81328aa96b59948a89cd93152e21fb, type: 3}
+  m_PrefabInstance: {fileID: 3871212156539982530}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &3875881910623239734 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 31711005640895732, guid: 2b81328aa96b59948a89cd93152e21fb, type: 3}
   m_PrefabInstance: {fileID: 3871212156539982530}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &7547705126999834889 stripped

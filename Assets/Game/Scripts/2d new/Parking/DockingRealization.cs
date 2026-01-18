@@ -8,14 +8,16 @@ public class DockingRealization : MonoBehaviour
 	[SerializeField] private MonoBehaviour[] offing, oning;
 	[SerializeField] private float interpolationPos, interpolationRot;
 
-	private DockingStantionHandler _station;
+	private DockingStantionHandler _stationHandler;
+	private DockingShipHandler _shipHandler;
 
 	private Vector3 _camStartPos;
 	private Quaternion _camStartRot;
 
-	public void Dock(DockingStantionHandler station)
+	public void Dock(DockingStantionHandler station, DockingShipHandler shipH)
 	{
-		_station = station;
+		_stationHandler = station;
+		_shipHandler = shipH;
 
 		_camStartPos = cam.transform.localPosition;
 		_camStartRot = cam.transform.localRotation;
@@ -31,16 +33,15 @@ public class DockingRealization : MonoBehaviour
 		station.Dock();
 	}
 
-	public void Undock(DockingStantionHandler station)
+	public void Undock()
 	{
-		_station = null;
+		_stationHandler.Undock();
+		_shipHandler.Undock();
 
 		Switch(false);
 
 		StopAllCoroutines();
 		StartCoroutine(Undocking());
-
-		station.Undock();
 	}
 
 	private void Switch(bool _isDock)
@@ -58,24 +59,24 @@ public class DockingRealization : MonoBehaviour
 
 	private IEnumerator Docking()
 	{
-		while((cam.position - _station.CmeraPoint.position).sqrMagnitude > 0.1f)
+		while((cam.position - _stationHandler.CmeraPoint.position).sqrMagnitude > 0.1f)
 		{
-			cam.position = Vector3.Lerp(cam.position, _station.CmeraPoint.position, interpolationPos);
-			cam.rotation = Quaternion.Lerp(cam.rotation, _station.CmeraPoint.rotation, interpolationRot);
+			cam.position = Vector3.Lerp(cam.position, _stationHandler.CmeraPoint.position, interpolationPos);
+			cam.rotation = Quaternion.Lerp(cam.rotation, _stationHandler.CmeraPoint.rotation, interpolationRot);
 
 			yield return null;
 		}
 
-		cam.position = _station.CmeraPoint.position;
-		cam.rotation = _station.CmeraPoint.rotation;
+		cam.position = _stationHandler.CmeraPoint.position;
+		cam.rotation = _stationHandler.CmeraPoint.rotation;
 	}
 
 	private IEnumerator Undocking()
 	{
 		while ((cam.localPosition - _camStartPos).sqrMagnitude > 0.1f)
 		{
-			cam.localPosition = Vector3.Lerp(cam.position, _camStartPos, interpolationPos);
-			cam.localRotation = Quaternion.Lerp(cam.rotation, _camStartRot, interpolationRot);
+			cam.localPosition = Vector3.Lerp(cam.localPosition, _camStartPos, interpolationPos);
+			cam.localRotation = Quaternion.Lerp(cam.localRotation, _camStartRot, interpolationRot);
 
 			yield return null;
 		}

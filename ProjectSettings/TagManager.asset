@@ -17,13 +17,13 @@ TagManager:
   - Dock zone
   - Parcking point
   - 
+  - 2d station
+  - 2d robot
+  - 2d boxes
+  - 2d ray cast plane
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - 2d box parent seter
+  - 2d box volume
   - 
   - 
   - 

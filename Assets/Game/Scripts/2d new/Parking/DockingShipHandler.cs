@@ -21,8 +21,15 @@ public class DockingShipHandler : MonoBehaviour
 
 	private bool _isProcessDocking = false, _isCanDocking = false, _isWeDocked = false;
 
+	private Rigidbody _rb;
+
 	// gizmo
 	private int _fallIndex = -1;
+
+	private void Awake()
+	{
+		ship.TryGetComponent(out _rb);
+	}
 
 	private void Update()
 	{
@@ -56,13 +63,15 @@ public class DockingShipHandler : MonoBehaviour
 		if(_isCanDocking && !_isWeDocked && Input.GetKeyDown(keyDocking))
 		{
 			_isWeDocked = true;
+			_rb.isKinematic = true;
 			dock?.Invoke();
-			dockingRealization.Dock(_targetStation);
+			dockingRealization.Dock(_targetStation, this);
 		}
 	}
 
 	public void Undock()
 	{
+		_rb.isKinematic = false;
 		_isWeDocked = false;
 		undock?.Invoke();
 	}

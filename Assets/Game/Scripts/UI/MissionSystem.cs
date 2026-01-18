@@ -75,7 +75,8 @@ public class MissionSystem : MonoBehaviour
         string pickName = m.pickupStation ? m.pickupStation.stationName : "???";
         string delName = m.deliverStation ? m.deliverStation.stationName : "???";
         routeText.text = $"PICKUP: {pickName}\nDELIVER: {delName}";
-
+       
+        /*
         // 2. Получаем Transform цели через Менеджер
         Transform targetTransform = StationManager.Instance.GetStationTransform(m.deliverStation);
 
@@ -86,7 +87,7 @@ public class MissionSystem : MonoBehaviour
 
             // Обновляем Карту (Надо будет чуть обновить MapSystem, чтобы он принимал Transform, а не ID)
             if (mapSystem) mapSystem.HighlightTarget(targetTransform);
-        }
+        }*/
     }
 }
 

@@ -6391,12 +6391,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1775607523}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 14ecaf5587374bc4db4de802ff4facba, type: 3}
+  m_Script: {fileID: 11500000, guid: 44ff95eaef626b7469ab28a603b36011, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShipTestMove
-  forceRotation: 12
-  forceFullForward: 1000
-  forceLinear: {x: 150, y: 150, z: 150}
+  forceRotation: 0
+  forceFullForward: 0
+  forceLinear: {x: 0, y: 0, z: 0}
   inputLinear: {x: 0, y: 0, z: 0}
   InputRot: {x: 0, y: 0}
   isFullForward: 0
@@ -6440,13 +6440,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1775607523}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f2176a992e83c040af09cc6c8400762, type: 3}
+  m_Script: {fileID: 11500000, guid: 881189fb7e38e7b40a7b38a1e83a90a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShipEntity
-  CurrentHealsPoint: 1
-  MaxHealsPoint: 200
-  CurrentOil: 1
-  MaxOil: 1
+  CurrentHealsPoint: 0
+  MaxHealsPoint: 0
+  CurrentOil: 0
+  MaxOil: 0
 --- !u!1 &1825834533
 GameObject:
   m_ObjectHideFlags: 0
