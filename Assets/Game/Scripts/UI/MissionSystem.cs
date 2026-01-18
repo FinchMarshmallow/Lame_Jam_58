@@ -4,15 +4,15 @@ using System.Collections.Generic;
 
 public class MissionSystem : MonoBehaviour
 {
-    [Header("UI References")]
+    [Header("UI")]
     public GameObject missionPanel;
     public TextMeshProUGUI headerText;
     public TextMeshProUGUI descText;
     public TextMeshProUGUI routeText;
 
-    [Header("Navigation")]
-    public CompassSystem compassSystem; 
-    public Transform[] allStations;     
+    [Header("Systems")]
+    public CompassSystem compassSystem;
+    public MapSystem mapSystem;
 
     [Header("Data")]
     public List<Mission> allMissions;
@@ -23,15 +23,13 @@ public class MissionSystem : MonoBehaviour
     void Start()
     {
         missionPanel.SetActive(false);
-        UpdateMissionUI();
+        // Небольшая задержка, чтобы StationManager успел проинициализироваться
+        Invoke(nameof(UpdateMissionUI), 0.1f);
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Tab))
-        {
-            TogglePause();
-        }
+        if (Input.GetKeyDown(KeyCode.Tab)) TogglePause();
     }
 
     public void TogglePause()
@@ -53,44 +51,41 @@ public class MissionSystem : MonoBehaviour
 
     public void CompleteCurrentMission()
     {
-        Debug.Log("Mission Completed!");
         currentMissionIndex++;
-
-        if (currentMissionIndex < allMissions.Count)
-        {
-            UpdateMissionUI();
-        }
+        if (currentMissionIndex < allMissions.Count) UpdateMissionUI();
         else
         {
-            // Конец игры
             if (compassSystem) compassSystem.ClearQuestMarkers();
-
-            descText.text = "ALL MISSIONS COMPLETED.";
-            routeText.text = "";
             headerText.text = "GAME OVER";
+            descText.text = "ALL JOBS DONE";
         }
     }
 
-    // Главный метод обновления
     void UpdateMissionUI()
     {
-        if (currentMissionIndex < allMissions.Count)
+        if (currentMissionIndex >= allMissions.Count) return;
+
+        Mission m = allMissions[currentMissionIndex];
+
+        // 1. Текст
+        headerText.text = $"// JOB {currentMissionIndex + 1}";
+        descText.text = m.description;
+
+        // Берем имена прямо из Data
+        string pickName = m.pickupStation ? m.pickupStation.stationName : "???";
+        string delName = m.deliverStation ? m.deliverStation.stationName : "???";
+        routeText.text = $"PICKUP: {pickName}\nDELIVER: {delName}";
+
+        // 2. Получаем Transform цели через Менеджер
+        Transform targetTransform = StationManager.Instance.GetStationTransform(m.deliverStation);
+
+        if (targetTransform != null)
         {
-            Mission m = allMissions[currentMissionIndex];
+            // Обновляем Компас
+            if (compassSystem) compassSystem.SetQuestMarker(targetTransform);
 
-            // 1. Текст
-            headerText.text = $"// MISSION LEVEL {currentMissionIndex + 1}";
-            descText.text = m.description;
-            routeText.text = $"PICKUP: {m.pickupStationName}\nDELIVER: {m.deliverStationName}";
-
-            if (compassSystem != null && allStations.Length > 0)
-            {
-                if (m.deliverStationID >= 0 && m.deliverStationID < allStations.Length)
-                {
-                    Transform target = allStations[m.deliverStationID];
-                    compassSystem.SetQuestMarker(target);
-                }
-            }
+            // Обновляем Карту (Надо будет чуть обновить MapSystem, чтобы он принимал Transform, а не ID)
+            if (mapSystem) mapSystem.HighlightTarget(targetTransform);
         }
     }
 }
@@ -98,10 +93,9 @@ public class MissionSystem : MonoBehaviour
 [System.Serializable]
 public class Mission
 {
-    [TextArea(3, 5)]
-    public string description;
-    public string pickupStationName;
-    public int pickupStationID;
-    public string deliverStationName;
-    public int deliverStationID;
+    [TextArea] public string description;
+
+    // ТЕПЕРЬ МЫ ИСПОЛЬЗУЕМ ФАЙЛЫ, А НЕ INT
+    public StationData pickupStation;
+    public StationData deliverStation;
 }
