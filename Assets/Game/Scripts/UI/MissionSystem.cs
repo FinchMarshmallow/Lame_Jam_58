@@ -60,38 +60,53 @@ public class MissionSystem : MonoBehaviour
             descText.text = "ALL JOBS DONE";
         }
     }
-
     void UpdateMissionUI()
     {
+        // Если миссии кончились - выходим
         if (currentMissionIndex >= allMissions.Count) return;
 
         Mission m = allMissions[currentMissionIndex];
 
-        // 1. Текст
-        headerText.text = $"// JOB {currentMissionIndex + 1}";
-        descText.text = m.description;
+        // ==================================================
+        // ЧАСТЬ 1: ТЕКСТ (Работает всегда, даже без станций)
+        // ==================================================
 
-        // Берем имена прямо из Data
-        string pickName = m.pickupStation ? m.pickupStation.stationName : "???";
-        string delName = m.deliverStation ? m.deliverStation.stationName : "???";
-        routeText.text = $"PICKUP: {pickName}\nDELIVER: {delName}";
-       
-        /*
-        // 2. Получаем Transform цели через Менеджер
-        Transform targetTransform = StationManager.Instance.GetStationTransform(m.deliverStation);
-
-        if (targetTransform != null)
+        // 1. Название Миссии (В заголовке)
+        if (headerText != null)
         {
-            // Обновляем Компас
-            if (compassSystem) compassSystem.SetQuestMarker(targetTransform);
+            headerText.text = $"// MISSION {currentMissionIndex + 1}";
+        }
 
-            // Обновляем Карту (Надо будет чуть обновить MapSystem, чтобы он принимал Transform, а не ID)
-            if (mapSystem) mapSystem.HighlightTarget(targetTransform);
-        }*/
+
+
+        // 3. Описание (Что везем и детали)
+        if (descText != null)
+        {
+            descText.text = m.description;
+        }
+
+
+        // ==================================================
+        // ЧАСТЬ 2: КОМПАС И КАРТА
+        // ==================================================
+
+        // Проверяем, есть ли менеджер и знаем ли мы, куда лететь
+        if (StationManager.Instance != null && m.deliverStation != null)
+        {
+            // Пытаемся найти эту станцию в 3D мире
+            Transform targetTransform = StationManager.Instance.GetStationTransform(m.deliverStation);
+
+            if (targetTransform != null)
+            {
+                // УРА! Станция найдена. Включаем компас и карту.
+                if (compassSystem) compassSystem.SetQuestMarker(targetTransform);
+                if (mapSystem) mapSystem.HighlightTarget(targetTransform);
+            }
+        }
     }
 }
 
-[System.Serializable]
+    [System.Serializable]
 public class Mission
 {
     [TextArea] public string description;

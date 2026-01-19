@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2462825c2fb992d43b4fb5becda231b7, type: 3}
   m_Name: New Station Data 1
   m_EditorClassIdentifier: Assembly-CSharp::StationData
-  stationName: Zemlya
+  stationName: mars
   description: zemlya nahuy
   mapIcon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}

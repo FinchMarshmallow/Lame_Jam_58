@@ -5,41 +5,62 @@ using TMPro;
 public class ShipHUD : MonoBehaviour
 {
     [Header("Bars")]
-    public Image hullBar; 
-    public Image fuelBar; 
+    public Image hullBar; // ���� HullSlider (Image)
+    public Image fuelBar; // ���� FuelSlider (Image)
 
     [Header("Text")]
     public TextMeshProUGUI speedText;
-    public TextMeshProUGUI objectiveText;
 
+    [Header("References")]
+    public ShipEntity shipData; // <-- ���� �������� ������ Player/Ship
+    public Rigidbody shipRb;    // <-- ���� �������� ������ Player (��� Rigidbody)
 
-    public ShipEntity playerShip;
-    public GameObject Ship;
-
-    void Start()
-    {
-
-
-        if (playerShip == null)
-        {
-            Debug.LogError("Player Ship reference is missing in ShipHUD.");
-            
-
-        }
-    }
+    // ������, ����� �� ������� ������������� ������ �������
+    private float alertTimer = 0f;
 
     void Update()
     {
-        if (playerShip == null) return;
+        if (shipData == null) return;
 
-        hullBar.fillAmount = playerShip.CurrentHealsPoint / playerShip.MaxHealsPoint;
-        fuelBar.fillAmount = playerShip.CurrentOil / playerShip.MaxOil;
+        // 1. ��������� ������� (Cast to float ����������, ����� ����� 0)
+        // ���������� ���� ����������: CurrentHealsPoint � CurrentOil
+        if (hullBar != null)
+            hullBar.fillAmount = (float)shipData.CurrentHealsPoint / shipData.MaxHealsPoint;
 
-        speedText.text = $"{Mathf.Round(Ship.gameObject.GetComponent<Rigidbody>().linearVelocity.magnitude)} m/s"; 
+        if (fuelBar != null)
+            fuelBar.fillAmount = (float)shipData.CurrentOil / shipData.MaxOil;
+
+        // 2. ��������� ��������
+        if (shipRb != null && speedText != null)
+        {
+            // ����� ��������, ���������
+            speedText.text = $"{Mathf.Round(shipRb.linearVelocity.magnitude)} m/s";
+        }
+
+        // 3. ������ ������� (ALERT)
+        CheckStatusAlerts();
     }
 
-    public void SetObjective(string text)
+    void CheckStatusAlerts()
     {
-        objectiveText.text = text;
+        alertTimer -= Time.deltaTime;
+        if (alertTimer > 0) return; // ���� ������� �����, ������
+
+        // �������� ������� (������ 20%)
+        float fuelPercent = (float)shipData.CurrentOil / shipData.MaxOil;
+        if (fuelPercent < 0.2f)
+        {
+            NotificationSystem.Instance.ShowAlert("WARNING: LOW FUEL", Color.red);
+            alertTimer = 5f; // ��������� ����� 5 ������
+            return;
+        }
+
+        // �������� �������� (������ 30%)
+        float hpPercent = (float)shipData.CurrentHealsPoint / shipData.MaxHealsPoint;
+        if (hpPercent < 0.3f)
+        {
+            NotificationSystem.Instance.ShowAlert("CRITICAL HULL DAMAGE", Color.red);
+            alertTimer = 5f;
+        }
     }
 }
