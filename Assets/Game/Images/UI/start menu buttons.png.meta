@@ -219,8 +219,8 @@ TextureImporter:
         width: 229
         height: 210
       alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 49, y: 49, z: 55, w: 58}
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 64, y: 49, z: 55, w: 58}
       customData: 
       outline: []
       physicsShape: []
@@ -241,7 +241,7 @@ TextureImporter:
         width: 95
         height: 30
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 17, y: 0, z: 11, w: 0}
       customData: 
       outline: []
@@ -263,7 +263,7 @@ TextureImporter:
         width: 67
         height: 26
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 13, y: 0, z: 11, w: 0}
       customData: 
       outline: []
@@ -285,7 +285,7 @@ TextureImporter:
         width: 42
         height: 46
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -307,7 +307,7 @@ TextureImporter:
         width: 66
         height: 70
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 14, y: 19, z: 16, w: 20}
       customData: 
       outline: []
@@ -316,6 +316,72 @@ TextureImporter:
       bones: []
       spriteID: 27aae467976794142ba4920e96804bcc
       internalID: -123009016
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: start menu buttons_9
+      rect:
+        serializedVersion: 2
+        x: 41
+        y: 825
+        width: 783
+        height: 164
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c45bda743017e5a4086f71b5ba3a9d8b
+      internalID: -790484708
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: start menu buttons_10
+      rect:
+        serializedVersion: 2
+        x: 152
+        y: 457
+        width: 737
+        height: 353
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5a9f1fb6aea13f9418b41705176b92ad
+      internalID: -2103009721
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: start menu buttons_11
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 275
+        width: 783
+        height: 164
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bfa8484522a1ba744b885bb9beaed647
+      internalID: 1046063746
       vertices: []
       indices: 
       edges: []
@@ -336,6 +402,8 @@ TextureImporter:
     nameFileIdTable:
       start menu buttons_0: 1634578399
       start menu buttons_1: 46131795
+      start menu buttons_10: -2103009721
+      start menu buttons_11: 1046063746
       start menu buttons_2: -1942407730
       start menu buttons_3: -1968771188
       start menu buttons_4: -1786559650
@@ -343,6 +411,7 @@ TextureImporter:
       start menu buttons_6: 525067879
       start menu buttons_7: -609326356
       start menu buttons_8: -123009016
+      start menu buttons_9: -790484708
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
