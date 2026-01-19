@@ -74,7 +74,7 @@ public class MissionSystem : MonoBehaviour
         // 1. Название Миссии (В заголовке)
         if (headerText != null)
         {
-            headerText.text = $"// MISSION {currentMissionIndex + 1}";
+            headerText.text = m.missionName;
         }
 
 
@@ -110,6 +110,7 @@ public class MissionSystem : MonoBehaviour
 public class Mission
 {
     [TextArea] public string description;
+    [TextArea] public string missionName;
 
     // ТЕПЕРЬ МЫ ИСПОЛЬЗУЕМ ФАЙЛЫ, А НЕ INT
     public StationData pickupStation;

@@ -1,122 +1,133 @@
-﻿using System.Collections.Generic;
-using UnityEditor;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
 
 public class DockingShipHandler : MonoBehaviour
 {
-	[SerializeField] private UnityEvent dock, undock;
+    [Header("Settings")]
+    [SerializeField] private KeyCode keyDocking = KeyCode.E;
+    [SerializeField] private float radiusPoints = 1f;
+    [SerializeField] private LayerMask maskPoints;
 
-	[SerializeField] private Transform ship;
+    [Header("References")]
+    [SerializeField] private Transform shipTransform;
+    [SerializeField] private Rigidbody shipRb;
+    [SerializeField] private DockingRealization dockingRealization;
+    [SerializeField] private GameObject dockPromptUI; // <--- Drag your "Press E" UI here!
 
-	[SerializeField] private ParckingPoint[] pointsDocking;
-	[SerializeField] private float radiusPoints;
-	[SerializeField] private LayerMask maskPoints;
 
-	[SerializeField] private KeyCode keyDocking = KeyCode.E;
+    [Header("Audio")]
+    public AudioSource audioSource;
+    public AudioClip dockSound;   // Drag 'звук стыковки'
+    public AudioClip undockSound; // Drag 'звук отстыковки'
 
-	[SerializeField] private DockingRealization dockingRealization;
+    [Header("Docking Points")]
+    [SerializeField] private ParckingPoint[] pointsDocking;
 
-	[SerializeField] private DockingStantionHandler _targetStation;
+    // Events
+    public UnityEvent onDock;
+    public UnityEvent onUndock;
 
-	private bool _isProcessDocking = false, _isCanDocking = false, _isWeDocked = false;
+    private DockingStantionHandler _targetStation;
+    private bool _isProcessDocking = false; // Are we inside the trigger?
+    private bool _isCanDocking = false;     // Are we aligned correctly?
+    private bool _isWeDocked = false;       // Are we currently docked?
 
-	private Rigidbody _rb;
+    private void Awake()
+    {
+        if (shipTransform == null) shipTransform = transform;
+        if (shipRb == null) shipRb = GetComponent<Rigidbody>();
+    }
 
-	// gizmo
-	private int _fallIndex = -1;
+    private void Update()
+    {
+        // 1. Handle UI Visibility
+        if (dockPromptUI != null)
+        {
+            // Show UI only if we CAN dock and are NOT yet docked
+            dockPromptUI.SetActive(_isCanDocking && !_isWeDocked);
+        }
 
-	private void Awake()
-	{
-		ship.TryGetComponent(out _rb);
-	}
+        if (!_isProcessDocking || _isWeDocked) return;
 
-	private void Update()
-	{
-		if (!_isProcessDocking)
-			return;
+        // 2. Check Alignment Points
+        bool allPointsGood = true;
+        for (int i = 0; i < pointsDocking.Length; i++)
+        {
+            // Check if point is inside a station docking zone
+            Collider[] colliders = Physics.OverlapSphere(pointsDocking[i].transform.position, radiusPoints, maskPoints);
 
-		bool isCan = true;
+            if (colliders.Length > 0)
+                pointsDocking[i].Good();
+            else
+            {
+                pointsDocking[i].Fall();
+                allPointsGood = false;
+            }
+        }
 
-		for(int i = 0; i < pointsDocking.Length; i++)
-		{
-			Collider[] colliders = Physics.OverlapSphere(pointsDocking[i].transform.position, radiusPoints, maskPoints);
-			
+        _isCanDocking = allPointsGood;
 
-			if (colliders.Length <= 0)
-			{
-				isCan = false;
-				_fallIndex = i;
-				pointsDocking[i].Fall();
-			}
-			else
-			{
-				pointsDocking[i].Good();
-			}
-		}
+        // 3. Handle Input
+        if (_isCanDocking && Input.GetKeyDown(keyDocking))
+        {
+            PerformDocking();
+        }
+    }
 
-		_isCanDocking = isCan;
+    private void PerformDocking()
+    {
+        _isWeDocked = true;
+        shipRb.isKinematic = true; // Freeze ship physics
 
-		if (isCan)
-			_fallIndex = -1;
+        // Hide the prompt immediately
+        if (dockPromptUI) dockPromptUI.SetActive(false);
 
-		if(_isCanDocking && !_isWeDocked && Input.GetKeyDown(keyDocking))
-		{
-			_isWeDocked = true;
-			_rb.isKinematic = true;
-			dock?.Invoke();
-			dockingRealization.Dock(_targetStation, this);
-		}
-	}
+        // Notify GameLoopManager (via Inspector Event)
+        onDock?.Invoke();
 
-	public void Undock()
-	{
-		_rb.isKinematic = false;
-		_isWeDocked = false;
-		undock?.Invoke();
-	}
+        // Start Camera Animation
+        // ADD THIS LINE:
+        if (audioSource && dockSound) audioSource.PlayOneShot(dockSound);
 
-	private void OnTriggerEnter(Collider other)
-	{
-		_isProcessDocking = true;
-		if (other.TryGetComponent(out DockingStantionHandler sh))
-		{
-			_targetStation = sh;
-		}
+        onDock?.Invoke();
 
-		for(int i = 0;i < pointsDocking.Length; i++)
-		{
-			pointsDocking[i].gameObject.SetActive(true);
-		}
-	}
+        if (dockingRealization) dockingRealization.Dock(_targetStation, this);
+    }
 
-	private void OnTriggerExit(Collider other)
-	{
-		_isProcessDocking = false;
+    public void Undock()
+    {
+        shipRb.isKinematic = false; // Unfreeze physics
+        _isWeDocked = false;
 
-		for (int i = 0; i < pointsDocking.Length; i++)
-		{
-			pointsDocking[i].gameObject.SetActive(false);
-		}
-	}
+        if (audioSource && undockSound) audioSource.PlayOneShot(undockSound);
 
-	private void OnDrawGizmos()
-	{
-		if (!_isProcessDocking)
-			return;
 
-		Color
-			good = new Color (0.1f, 0.9f, 0.1f),
-			fall = new Color (0.9f, 0.1f, 0.1f);
+        onUndock?.Invoke();
+    }
 
-		for(int i = 0; i < pointsDocking.Length; i++)
-		{
-			if (i != _fallIndex)
-				Gizmos.color = good;
-			else
-				Gizmos.color = fall;
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.TryGetComponent(out DockingStantionHandler sh))
+        {
+            _isProcessDocking = true;
+            _targetStation = sh;
+            TogglePoints(true);
+        }
+    }
 
-			Gizmos.DrawWireSphere(pointsDocking[i].transform.position, radiusPoints);
-		}
-	}
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.TryGetComponent(out DockingStantionHandler sh))
+        {
+            _isProcessDocking = false;
+            _targetStation = null;
+            _isCanDocking = false;
+            TogglePoints(false);
+        }
+    }
+
+    private void TogglePoints(bool state)
+    {
+        foreach (var p in pointsDocking) p.gameObject.SetActive(state);
+    }
 }
