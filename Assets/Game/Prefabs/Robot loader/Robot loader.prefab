@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8451654810056154201}
   - component: {fileID: 5072969004586302901}
   - component: {fileID: 22172525413599953}
+  - component: {fileID: 2657849447651596282}
   m_Layer: 12
   m_Name: Robot loader
   m_TagString: Untagged
@@ -29,11 +30,12 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.21306992, y: -1.0299997, z: -0.107406616}
-  m_LocalScale: {x: 0.29186037, y: 0.29186037, z: 0.29186034}
+  m_LocalScale: {x: 0.18, y: 0.2918604, z: 0.18}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6623080008086517256}
   - {fileID: 1480144626451281431}
+  - {fileID: 2105506694324093641}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8451654810056154201
@@ -48,8 +50,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77e538e70c067c24e8e80b87b2b60a91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RobotLoaderMove
-  linerForce: 30
-  rotationForce: 1
+  linerForce: 25
+  rotationForce: 0.4
   compass: {fileID: 6623080008086517256}
   layerMask:
     serializedVersion: 2
@@ -91,7 +93,7 @@ SphereCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2013804400328185226}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 13d01d73b5f92184d9486aa8ef9ae38d, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -103,8 +105,98 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.62
+  m_Radius: 0.3
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!65 &2657849447651596282
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2013804400328185226}
+  m_Material: {fileID: 13400000, guid: 13d01d73b5f92184d9486aa8ef9ae38d, type: 2}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.85, y: 1, z: 0.6348813}
+  m_Center: {x: 6.371914e-10, y: 0, z: 0.3193252}
+--- !u!1 &6047533961659929808
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2105506694324093641}
+  - component: {fileID: 3921878868736650335}
+  - component: {fileID: 6217112706516279793}
+  m_Layer: 12
+  m_Name: graping
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2105506694324093641
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6047533961659929808}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 1.093}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3490012530136305906}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &3921878868736650335
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6047533961659929808}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.3
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6217112706516279793
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6047533961659929808}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f14fdc636ead72a4c9ffe03bd6af7a72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RobotLoaderGrapBoxes
+  pointMagnite: {fileID: 2105506694324093641}
+  force: 15
+  radius: 0.3
 --- !u!1 &7153575100743393766
 GameObject:
   m_ObjectHideFlags: 0

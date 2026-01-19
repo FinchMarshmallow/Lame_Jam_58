@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
 public class ShipInputSlider : MonoBehaviour, IDragHandler, IDropHandler, IPointerExitHandler, ICastHandler
@@ -8,10 +9,12 @@ public class ShipInputSlider : MonoBehaviour, IDragHandler, IDropHandler, IPoint
 	[SerializeField] private float round;
 	[SerializeField] private GameObject[] offObj;
 
-	[SerializeField] public float Value;
+	[SerializeField] private UnityEvent pressEvent;
 
-	[SerializeField] private bool _isDrag;
-	[SerializeField] private float _distance;
+	public float Value;
+
+	private bool _isDrag;
+	private float _distance;
 
 	private void Awake()
 	{
@@ -46,6 +49,7 @@ public class ShipInputSlider : MonoBehaviour, IDragHandler, IDropHandler, IPoint
 
 		if (!_isDrag)
 		{
+			pressEvent?.Invoke();
 			OffObj(false);
 			_isDrag = true;
 			viewPoint.gameObject.SetActive(false);
@@ -57,6 +61,7 @@ public class ShipInputSlider : MonoBehaviour, IDragHandler, IDropHandler, IPoint
 	{
 		if (!_isDrag && Input.GetMouseButton(0) && !Input.GetMouseButton(1))
 		{
+			pressEvent?.Invoke();
 			OffObj(false);
 			_isDrag = true;
 			viewPoint.gameObject.SetActive(false);
